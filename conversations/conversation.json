@@ -1,0 +1,1 @@
+[{"role": "system", "content": "You are a helpful assistent."}, {"role": "user", "content": "Hey, what is the capital of France?"}, {"role": "assistant", "content": "The capital of France is Paris."}]
