@@ -41,11 +41,10 @@ def chat_gpt(message_array, temperature=0.5):
 
     return response['choices'][0]['message']['content']
 
+# Test function
+def test():
 
-def main():
     initialize_openai()
-
-    # Test the chatGPT function
     message_array = [
         {"role": "system", "content": "You are a helpful assistant."},
         {"role": "user", "content": "Can you help me with a question?"},
@@ -59,4 +58,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    test()

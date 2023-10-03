@@ -22,8 +22,6 @@ if __name__ == "__main__":
         transcription = transcription_reader.read_and_clear()
 
         if transcription is not None and transcription.strip():
-            # Process the transcription as needed
-            # For example, you can send it to ChatGPT or perform other actions
 
             print(transcription)
 
