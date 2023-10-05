@@ -2,7 +2,7 @@ import time
 
 class ReadTranscription:
 
-    def read_and_clear(self, transcription_file_path="transcription.txt"):
+    def read_and_clear(self, transcription_file_path="transcript.txt"):
         try:
             with open(transcription_file_path, "r") as file:
                 content = file.read()
@@ -25,4 +25,4 @@ if __name__ == "__main__":
 
             print(transcription)
 
-        time.sleep(1)
+        time.sleep(3)

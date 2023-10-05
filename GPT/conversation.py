@@ -34,15 +34,12 @@ class ConversationManager:
                 existing_messages = json.load(f)
         return existing_messages
 
-    def json_initiate(self, agent_tone: str = None):
-        if agent_tone is None:
-            messages = [
+    def json_initiate(self):
+
+        # Default Setting
+        messages = [
                 {"role": "system", "content": "You are a helpful assistant"}
-            ]
-        else:
-            messages = [
-                {"role": "system", "content": agent_tone}
-            ]
+        ]
 
         file_path = self.save_conversation(messages)
         return file_path
@@ -145,4 +142,3 @@ class FileManager:
             elif role == "assistant":
                 print(f"ASSISTANT: {content}")
             print()
-
