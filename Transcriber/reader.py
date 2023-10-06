@@ -2,27 +2,29 @@ import time
 
 class ReadTranscription:
 
-    def read_and_clear(self, transcription_file_path="transcript.txt"):
+    def read_and_clear(self, transcription_file_path="Transcriber/transcript.txt"):
         try:
             with open(transcription_file_path, "r") as file:
-                content = file.read()
+                lines = file.readlines()
 
-            with open(transcription_file_path, "w") as file:
-                file.write("")
-                pass
+                if len(lines) >=3:
+                    content = ""
+                    for line in lines[2:]:
+                        print(line)
+                        content += line
 
             return content
         except FileNotFoundError:
-            return None
+            raise FileNotFoundError
 
 if __name__ == "__main__":
+
     transcription_reader = ReadTranscription()
 
     while True:
         transcription = transcription_reader.read_and_clear()
 
-        if transcription is not None and transcription.strip():
-
+        if transcription is not None:
             print(transcription)
 
         time.sleep(3)

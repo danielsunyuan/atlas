@@ -36,7 +36,7 @@ if __name__ == "__main__":
     # stream = whisper.run_whisper()
 
     # Create an instance of the ReadTranscription class
-    reader = transcription.ReadTranscription()
+    reader = whisper.ReadTranscription()
 
     while True:
         # Call the read_and_clear method on the instance
