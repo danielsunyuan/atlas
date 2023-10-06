@@ -17,6 +17,7 @@ class ReadTranscription:
         except FileNotFoundError:
             raise FileNotFoundError
 
+# Example Usage
 if __name__ == "__main__":
 
     transcription_reader = ReadTranscription()
@@ -24,7 +25,7 @@ if __name__ == "__main__":
     while True:
         transcription = transcription_reader.read_and_clear()
 
-        if transcription is not None:
+        if transcription is not None and transcription.strip():
             print(transcription)
 
         time.sleep(3)

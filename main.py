@@ -1,7 +1,8 @@
 from Transcriber import reader as transcription
 from Transcriber import whisper as whisper
-from GPT import openai
+from GPT import openai as AI
 from GPT import conversation
+from GPT import file_manager
 import time
 
 # CONSTANTS
@@ -25,7 +26,7 @@ def chatGPT(text):
         convo = conversation_manager.read_conversation()
 
         # GPT 3.5 API 
-        response = openai.chat_gpt(convo)
+        response = AI.chat_gpt(convo)
         conversation_manager.ai_store(response)
         print(f'\nAtlas: {response}\n')
 
@@ -35,8 +36,15 @@ if __name__ == "__main__":
 
     # stream = whisper.run_whisper()
 
+    conversation_manager = conversation.ConversationManager(CONVERSATIONS, DIRECTORY_PATH)
+    conversation_manager.clear_conversation()
+    current_conversation_file = conversation_manager.json_initiate()
+    print(f"Conversation file created at: {current_conversation_file}")
+
     # Create an instance of the ReadTranscription class
-    reader = whisper.ReadTranscription()
+    reader = transcription.ReadTranscription()
+    
+    LLM = AI.GPT()
 
     while True:
         # Call the read_and_clear method on the instance
@@ -44,8 +52,11 @@ if __name__ == "__main__":
 
         if transcript is not None and transcript.strip():
 
-            print("sending to GPT")
-            chatGPT(transcript)
+            # Store User Messages
+            conversation_manager.user_store(transcript)
+            convo = conversation_manager.read_conversation()
+
+            response = LLM.chat_gpt(convo)
+            print(response)
 
         time.sleep(2)
-        print("----")
