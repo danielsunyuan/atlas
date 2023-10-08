@@ -34,7 +34,7 @@ def chatGPT(text):
 
 if __name__ == "__main__":
 
-    # stream = whisper.run_whisper()
+    # stream = whisper.run()
 
     conversation_manager = conversation.ConversationManager(CONVERSATIONS, DIRECTORY_PATH)
     conversation_manager.clear_conversation()
