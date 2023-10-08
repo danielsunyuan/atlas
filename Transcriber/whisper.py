@@ -18,7 +18,6 @@ def run_whisper():
     #command = "./stream", "-m ./models/ggml-base.en.bin", "-f transcript.txt", "-t 8", "--step 500", "--length 5000"
     #command = "./stream -m ./models/ggml-base.en.bin -tdrz --vad-thold 0.50"
 
-
     command = """
     ./stream -m ./models/ggml-base.en.bin -tdrz --vad-thold 0.50
 
@@ -47,7 +46,7 @@ def run_whisper():
                 # Live Transcription
                 print(cleaned_text)
                 write_transcription(cleaned_text)
-
+                
 
 if __name__ == "__main__":
     run_whisper()

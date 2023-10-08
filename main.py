@@ -57,6 +57,7 @@ if __name__ == "__main__":
             convo = conversation_manager.read_conversation()
 
             response = LLM.chat_gpt(convo)
+            conversation_manager.ai_store(response)
             print(response)
 
         time.sleep(2)

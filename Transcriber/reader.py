@@ -7,7 +7,8 @@ class ReadTranscription:
             with open(transcription_file_path, "r") as file:
                 lines = file.readlines()
 
-                if len(lines) >=3:
+                # Read the 3rd line, because IDK why whisper.py writes 2 times?!
+                if len(lines) >= 3:
                     content = ""
                     for line in lines[2:]:
                         print(line)
