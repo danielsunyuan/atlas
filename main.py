@@ -34,7 +34,7 @@ def chatGPT(text):
 
 if __name__ == "__main__":
 
-    # stream = whisper.run()
+    stream = whisper.run()
 
     conversation_manager = conversation.ConversationManager(CONVERSATIONS, DIRECTORY_PATH)
     conversation_manager.clear_conversation()
@@ -60,4 +60,9 @@ if __name__ == "__main__":
             conversation_manager.ai_store(response)
             print(response)
 
-        time.sleep(2)
+        time.sleep(2) # Naive implementation of Automation
+
+        """
+            - Implement a way for sound effects to be part of the array of text (form context for AI)
+            - Implement a VAD system to send only when detecting user
+        """
