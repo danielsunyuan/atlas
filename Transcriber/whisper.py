@@ -1,4 +1,5 @@
 import re
+import json
 import subprocess
 
 # Functions for Cleanup
@@ -10,10 +11,10 @@ def remove_escape_sequences(text):
 """
     TODO: Have the SFX within a JSON along with transcripted words to add context for AI
 """
-def remove_bracket_text(text):
+def check_bracketed(text):
     # Use regular expressions to find and remove bracketed text
     text_without_brackets = re.sub(r'\[[^\]]*\]|\([^\)]*\)|\{[^\}]*\}', '', text)
-    return text_without_brackets
+    return True
 
 # Write to Transcript.txt
 def write_transcription(cleaned_text, file_path="transcript.txt"):
@@ -29,6 +30,7 @@ def run():
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 
     while True:
+
         output = process.stdout.readline()
 
         # Remove empty outputs
@@ -37,7 +39,6 @@ def run():
 
         elif output:
             text = remove_escape_sequences(output)
-            text = remove_bracket_text(text)
 
             # Live Transcription
             print(f"{text}")

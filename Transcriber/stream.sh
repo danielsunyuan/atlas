@@ -1,3 +1,4 @@
+#!/bin/bash
 ./stream -m ./models/ggml-base.en.bin -tdrz --vad-thold 0.6
 
 ...

@@ -1,34 +1,32 @@
-from Conversations.conversation import ConversationManager
-from Conversations.file_manager import FileManager
+from conversation import ConversationManager
+from file_manager import FileManager
 from openai_api_call import GPT
 
 
-DIRECTORY_PATH = ''
+DIRECTORY_PATH = 'Conversations'
 CONVERSATIONS = 'conversation.json'
 
 def ChatGPT(text):
+
+    #Initialise
     conversation_manager = ConversationManager(CONVERSATIONS, DIRECTORY_PATH)
 
     conversation_manager.clear_conversation()
-    current_conversation_file = conversation_manager.json_initiate()
+    conversation_manager.json_initiate()
 
-    print(f"Conversation file created at: {current_conversation_file}")
+    # Store User Messages
+    conversation_manager.user_store(text)
+    convo = conversation_manager.read_conversation()
 
-    # While "Words detected for GPT" send the transcription through
-    while True:
-        user_input = text
+    # GPT 3.5 API 
+    response = GPT.chat_gpt(convo)
+    conversation_manager.ai_store(response)
 
-        # Store User Messages
-        conversation_manager.user_store(user_input)
-        convo = conversation_manager.read_conversation()
-
-        # GPT 3.5 API 
-        response = GPT.chat_gpt(convo)
-        conversation_manager.ai_store(response)
-        print(f'\nAtlas: {response}\n')
+    return response
 
 
 if __name__ == "__main__":
 
-    text = "hellow"
-    ChatGPT(text)
+    text = "Hello World"
+    response = ChatGPT(text)
+    print(f'\nAtlas: {response}\n')
