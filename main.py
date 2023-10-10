@@ -34,7 +34,7 @@ def chatGPT(text):
 
 if __name__ == "__main__":
 
-    stream = whisper.run()
+    # stream = whisper.run()
 
     conversation_manager = conversation.ConversationManager(CONVERSATIONS, DIRECTORY_PATH)
     conversation_manager.clear_conversation()
@@ -50,7 +50,7 @@ if __name__ == "__main__":
         # Call the read_and_clear method on the instance
         transcript = reader.read_and_clear()
 
-        if transcript is not None and transcript.strip():
+        if transcript is not None:
 
             # Store User Messages
             conversation_manager.user_store(transcript)

@@ -6,16 +6,21 @@ def remove_escape_sequences(text):
         text = text.decode("utf-8")
         return re.sub(r'\x1b\[[0-9;]*[mK]', '', text).strip()
 
-# Removes the soundfx
+# Removes the Soundfx 
+"""
+    TODO: Have the SFX within a JSON along with transcripted words to add context for AI
+"""
 def remove_bracket_text(text):
-            if not (re.search(r'\(.*\)|{.*}', text)):
-                raise NotImplementedError
+    # Use regular expressions to find and remove bracketed text
+    text_without_brackets = re.sub(r'\[[^\]]*\]|\([^\)]*\)|\{[^\}]*\}', '', text)
+    return text_without_brackets
 
 # Write to Transcript.txt
 def write_transcription(cleaned_text, file_path="transcript.txt"):
         with open(file_path, "w") as file:
                 cleaned_text.strip()
                 file.write(cleaned_text)
+
 
 def run():
 
@@ -32,9 +37,10 @@ def run():
 
         elif output:
             text = remove_escape_sequences(output)
+            text = remove_bracket_text(text)
 
             # Live Transcription
-            print(text)
+            print(f"{text}")
             write_transcription(text)
 
 
