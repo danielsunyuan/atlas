@@ -41,6 +41,7 @@ class GPT:
 
         return response['choices'][0]['message']['content']
 
+
 # Test function
 def test():
 

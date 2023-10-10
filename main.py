@@ -39,7 +39,6 @@ if __name__ == "__main__":
     conversation_manager = conversation.ConversationManager(CONVERSATIONS, DIRECTORY_PATH)
     conversation_manager.clear_conversation()
     current_conversation_file = conversation_manager.json_initiate()
-    print(f"Conversation file created at: {current_conversation_file}")
 
     # Create an instance of the ReadTranscription class
     reader = transcription.ReadTranscription()
