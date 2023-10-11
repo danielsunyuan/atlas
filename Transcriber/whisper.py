@@ -4,48 +4,51 @@ import subprocess
 
 # Functions for Cleanup
 def remove_escape_sequences(text):
-        text = text.decode("utf-8")
-        return re.sub(r'\x1b\[[0-9;]*[mK]', '', text).strip()
+    text = text.decode("utf-8")
+    return re.sub(r'\x1b\[[0-9;]*[mK]', '', text).strip()
 
-# Removes the Soundfx 
-"""
-    TODO: Have the SFX writin in a JSON along with transcripted words to add context for AI
-"""
-def remove_sfx(text):
-    # Use regular expressions to find bracketed text (as displayed as sfx)
-    text_without_brackets = re.sub(r'\[[^\]]*\]|\([^\)]*\)|\{[^\}]*\}', '', text)
-    return text_without_brackets
+def detect_brackets(text):
+    # A function to detect whether text is an SFX or speech based on the presence of brackets
+    if re.search(r'[\[\](){}]', text):
+        return "sfx"
+    else:
+        return "speech"
 
-# Write to Transcript.txt
-def write_transcription(cleaned_text, file_path="transcript.txt"):
-        with open(file_path, "w") as file:
-                cleaned_text.strip()
-                file.write(cleaned_text)
+def transcription_to_json(text):
+    # Determine if it's speech or SFX and then write to JSON accordingly
+    category = detect_brackets(text)
+
+    # Split the text using '\r' and keep the last part
+    parts = text.split('\r')
+    high_confidence_transcription = parts[-1].strip()
+    
+    if high_confidence_transcription:
+        transcription = {
+            category: high_confidence_transcription
+        }
+        with open("transcript.json", "a") as file:
+            json.dump(transcription, file, ensure_ascii=False)
+            file.write("\n")
 
 
 def run():
-
     # Execute C++ transcription code
     command = "bash stream.sh"
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 
     while True:
-
         output = process.stdout.readline()
 
         # Remove empty outputs
         if output == b'' and process.poll() is not None:
             break
 
-
         elif output:
-            text = remove_escape_sequences(output)
-            text = remove_sfx(text)
+            all_text = remove_escape_sequences(output)
+            transcription_to_json(all_text)
 
             # Live Transcription
-            print(f"{text}")
-            write_transcription(text)
-
+            print(f"{all_text}")
 
 if __name__ == "__main__":
     run()

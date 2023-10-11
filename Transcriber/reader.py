@@ -1,4 +1,5 @@
 import time
+import json
 
 class ReadTranscription:
 
@@ -18,17 +19,28 @@ class ReadTranscription:
         except FileNotFoundError:
             raise FileNotFoundError
             
+    def read_transcription_from_json(self, file_path="Transcriber/transcript.json"):
+        transcriptions = []
+        with open(file_path, "r") as file:
+            for line in file:
+                entry = json.loads(line)
+                transcriptions.append(entry)
+        return transcriptions
 
 
 # Example Usage
 if __name__ == "__main__":
 
-    transcription_reader = ReadTranscription()
+    transcriptor = ReadTranscription()
 
     while True:
-        transcription = transcription_reader.read_and_clear()
 
-        if transcription is not None and transcription.strip():
-            print(transcription)
+        # To read and extract elements from the JSON file "transcript.json"
+        transcriptions = transcriptor.read_transcription_from_json()
+
+        # You can now work with the transcriptions list
+        for transcription in transcriptions:
+            speech = transcription.get("speech")
+            sfx = transcription.get("sfx")
 
         time.sleep(3)
