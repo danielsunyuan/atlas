@@ -2,7 +2,7 @@ import sys
 sys.path.append('GPT')
 sys.path.append('Transcriber')
 
-from Transcriber import reader as transcription
+from Transcriber import reader as transcription_reader
 from Transcriber import whisper as whisper
 from GPT import ChatGPT
 
@@ -14,16 +14,21 @@ def main():
     # stream = whisper.run()
 
     # Create an instance of the ReadTranscription class
-    reader = transcription.ReadTranscription()
+    reader = transcription_reader.ReadTranscription()
     
 
     while True:
         # Call the read_and_clear method on the instance
-        transcript = reader.read_and_clear()
+        transcript = reader.read_transcription_from_json()
 
         if transcript is not None:
 
-            response = ChatGPT.ChatGPT(transcript)
+            # You can now work with the transcriptions list
+            for transcription in transcript:
+                speech = transcription.get("speech")
+                sfx = transcription.get("sfx")
+
+            response = ChatGPT.ChatGPT(speech)
             print(response)
 
         time.sleep(2) # Naive implementation of Automation

@@ -15,12 +15,13 @@ def detect_brackets(text):
         return "speech"
 
 def transcription_to_json(text):
-    # Determine if it's speech or SFX and then write to JSON accordingly
-    category = detect_brackets(text)
 
     # Split the text using '\r' and keep the last part
     parts = text.split('\r')
     high_confidence_transcription = parts[-1].strip()
+
+    # Determine if it's speech or SFX and then write to JSON accordingly
+    category = detect_brackets(text)
     
     if high_confidence_transcription:
         transcription = {
