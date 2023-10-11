@@ -17,6 +17,8 @@ class ReadTranscription:
             return content
         except FileNotFoundError:
             raise FileNotFoundError
+            
+
 
 # Example Usage
 if __name__ == "__main__":

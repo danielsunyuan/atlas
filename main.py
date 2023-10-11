@@ -1,6 +1,7 @@
 import sys
 sys.path.append('GPT')
 sys.path.append('Transcriber')
+
 from Transcriber import reader as transcription
 from Transcriber import whisper as whisper
 from GPT import ChatGPT
